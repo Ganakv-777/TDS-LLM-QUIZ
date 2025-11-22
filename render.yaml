@@ -1,15 +1,13 @@
 services:
   - type: web
-    name: tds-llm-backend
+    name: tds-llm-quiz
     env: python
-    region: singapore
-    buildCommand: "pip install -r requirements.txt && playwright install chromium"
-    startCommand: "uvicorn main:app --host 0.0.0.0 --port $PORT"
     plan: free
-    envVars:
-      - key: GEMINI_API_KEY
-        sync: false
-      - key: STUDENT_EMAIL
-        sync: false
-      - key: STUDENT_SECRET
-        sync: false
+    region: oregon
+    branch: main
+
+    buildCommand: |
+      pip install -r requirements.txt
+      python -m playwright install --with-deps chromium
+
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
